@@ -1,4 +1,46 @@
 import webdriver from 'selenium-webdriver'
+async function test(capabilities) {
+  let driver
+  try {
+    driver = new webdriver.Builder()
+      .usingServer('http://hub-cloud.browserstack.com/wd/hub')
+      .withCapabilities(capabilities)
+      .build()
+    await driver.get('http://localhost:8099')
+    const failures = await driver.findElements(webdriver.By.css('#fail'))
+    const failed = await failures[0].getText()
+    if(!failed){
+      await driver.executeScript(
+        `browserstack_executor: {
+          "action": "setSessionStatus",
+          "arguments": {
+            "status":"passed",
+            "reason": "No test failures"
+          }
+        }`
+      )
+    } else {
+      await driver.executeScript(
+        `browserstack_executor: {
+          "action": "setSessionStatus",
+          "arguments": {
+            "status":"failed",
+            "reason": "Test failures\n${failed}"
+          }
+        }`
+      )
+    }
+  }
+  catch (error) {
+    console.error(error)
+  }
+  finally {
+    if (driver) {
+      await driver.quit()
+    }
+  }
+}
+
 const iphone13pro = {
   "os_version" : "15",
   "device" : "iPhone 13 Pro",
@@ -48,39 +90,7 @@ const FirefoxLatest = {
   'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY
 }
 
-async function test(capabilities) {
-  const driver = new webdriver.Builder()
-    .usingServer('http://hub-cloud.browserstack.com/wd/hub')
-    .withCapabilities(capabilities)
-    .build()
-  await driver.get('http://localhost:3333/')
-  const failures = await driver.findElements(webdriver.By.css('#fail'))
-  const failed = await failures[0].getText()
-  if(!failed){
-    driver.executeScript(
-      `browserstack_executor: {
-        "action": "setSessionStatus",
-        "arguments": {
-          "status":"passed",
-          "reason": "No test failures"
-        }
-      }`
-    )
-  } else {
-    driver.executeScript(
-      `browserstack_executor: {
-        "action": "setSessionStatus",
-        "arguments": {
-          "status":"failed",
-          "reason": "Test failures\n${failed}"
-        }
-      }`
-    )
-  }
-  await driver.quit()
-}
-
 test(chromeWindows)
-//test(iphone13pro)
-//test(safari15)
-//test(FirefoxLatest)
+test(iphone13pro)
+test(safari15)
+test(FirefoxLatest)
