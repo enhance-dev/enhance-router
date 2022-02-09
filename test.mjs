@@ -11,7 +11,7 @@ async function test(capabilities) {
     const failures = await driver.findElements(webdriver.By.id('fail'))
     console.log('Failures: ', failures)
     if (failures.length) {
-      const failed = await failures.getText()
+      const failed = await failures[0].getText()
       console.log('text: ', failed)
       if(!failed){
         await driver.executeScript(
