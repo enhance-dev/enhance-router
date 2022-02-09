@@ -57,9 +57,25 @@ async function test(capabilities) {
   const failures = await driver.findElements(webdriver.By.css('#fail'))
   const failed = await failures[0].getText()
   if(!failed){
-    driver.executeScript('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "No test failures"}}')"}}');
+    driver.executeScript(
+      `browserstack_executor: {
+        "action": "setSessionStatus",
+        "arguments": {
+          "status":"passed",
+          "reason": "No test failures"
+        }
+      }`
+    )
   } else {
-    driver.executeScript('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "Test failures"}}');
+    driver.executeScript(
+      `browserstack_executor: {
+        "action": "setSessionStatus",
+        "arguments": {
+          "status":"failed",
+          "reason": "Test failures\n${failed}"
+        }
+      }`
+    )
   }
   await driver.quit()
 }
