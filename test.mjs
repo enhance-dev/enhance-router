@@ -10,18 +10,20 @@ async function test(capabilities) {
     await driver.get('http://localhost:8099')
     const failures = await driver.findElements(webdriver.By.id('fail'))
     console.log('Failures: ', failures)
-    console.log('text: ', failures[0].getText())
-    const failed = await failures[0].getText()
-    if(!failed){
-      await driver.executeScript(
-        `browserstack_executor: {
-          "action": "setSessionStatus",
-          "arguments": {
-            "status":"passed",
-            "reason": "No test failures"
-          }
-        }`
-      )
+    if (failures.length) {
+      const failed = await failures.getText()
+      console.log('text: ', failed)
+      if(!failed){
+        await driver.executeScript(
+          `browserstack_executor: {
+            "action": "setSessionStatus",
+            "arguments": {
+              "status":"passed",
+              "reason": "No test failures"
+            }
+          }`
+        )
+      }
     } else {
       await driver.executeScript(
         `browserstack_executor: {

@@ -117,6 +117,10 @@
       },
 
       () => {
+        return ['should fail', fail]
+      },
+
+      () => {
         // Reset
         navigate('/')
         return ['should reset', window.location.pathname === '/']
