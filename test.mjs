@@ -1,4 +1,4 @@
-import keepAlive from './keep-alive.mjs'
+import './keep-alive.mjs'
 import webdriver from 'selenium-webdriver'
 const iphone13pro = {
   "os_version" : "15",
