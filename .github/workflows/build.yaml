@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: 'Running application under test'
-        run: npm t
+        run: npm t &
 
       - name: 'Running test on BrowserStack'
         run: node ./test.mjs
