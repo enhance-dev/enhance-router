@@ -9,7 +9,9 @@ async function test(capabilities) {
       .build()
     await driver.get('http://localhost:8099')
     const failures = await driver.findElements(webdriver.By.id('fail'))
-    const failed = await failures.getText()
+    console.log('Failures: ', failures)
+    console.log('text: ', failures[0].getText())
+    const failed = await failures[0].getText()
     if(!failed){
       await driver.executeScript(
         `browserstack_executor: {
