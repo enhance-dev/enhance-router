@@ -1,4 +1,5 @@
 import webdriver from 'selenium-webdriver'
+
 async function test(capabilities) {
   let driver
   try {
@@ -7,8 +8,8 @@ async function test(capabilities) {
       .withCapabilities(capabilities)
       .build()
     await driver.get('http://localhost:8099')
-    const failures = await driver.findElements(webdriver.By.css('#fail'))
-    const failed = await failures[0].getText()
+    const failures = await driver.findElements(By.id('fail'))
+    const failed = await failures.getText()
     if(!failed){
       await driver.executeScript(
         `browserstack_executor: {
@@ -33,6 +34,15 @@ async function test(capabilities) {
   }
   catch (error) {
     console.error(error)
+    await driver.executeScript(
+      `browserstack_executor: {
+        "action": "setSessionStatus",
+        "arguments": {
+          "status":"failed",
+          "reason": "Failed with error\n${error.message}"
+        }
+      }`
+    )
   }
   finally {
     if (driver) {
@@ -90,7 +100,7 @@ const FirefoxLatest = {
   'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY
 }
 
-test(chromeWindows)
-test(iphone13pro)
-test(safari15)
-test(FirefoxLatest)
+await test(chromeWindows)
+await test(iphone13pro)
+await test(safari15)
+await test(FirefoxLatest)
