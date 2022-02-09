@@ -8,7 +8,7 @@ async function test(capabilities) {
       .withCapabilities(capabilities)
       .build()
     await driver.get('http://localhost:8099')
-    const failures = await driver.findElements(By.id('fail'))
+    const failures = await driver.findElements(webdriver.By.id('fail'))
     const failed = await failures.getText()
     if(!failed){
       await driver.executeScript(
