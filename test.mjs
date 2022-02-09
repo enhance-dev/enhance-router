@@ -81,6 +81,6 @@ async function test(capabilities) {
 }
 
 test(chromeWindows)
-test(iphone13pro)
-test(safari15)
-test(FirefoxLatest)
+//test(iphone13pro)
+//test(safari15)
+//test(FirefoxLatest)
