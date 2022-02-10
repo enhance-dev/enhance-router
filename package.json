@@ -9,7 +9,7 @@
     "clean": "rimraf ./public/lib",
     "copy": "./scripts/copy-to-public.mjs",
     "setup": "run-s clean copy start",
-    "start": "npx sandbox &"
+    "start": "npx sandbox"
   },
   "repository": {
     "type": "git",
