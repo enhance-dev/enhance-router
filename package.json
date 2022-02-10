@@ -5,11 +5,11 @@
   "type": "module",
   "main": "index.mjs",
   "scripts": {
-    "browser": "npx playwright test",
+    "test": "npx playwright test",
     "clean": "rimraf ./public/lib",
     "copy": "./scripts/copy-to-public.mjs",
-    "start": "npx sandbox &",
-    "test": "run-s clean copy start browser"
+    "setup": "run-s clean copy start",
+    "start": "npx sandbox &"
   },
   "repository": {
     "type": "git",
