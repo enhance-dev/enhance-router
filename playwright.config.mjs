@@ -13,6 +13,12 @@ import { devices } from '@playwright/test'
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
 export const config = {
+/* Run your local dev server before starting the tests */
+//  webServer: {
+//    command: 'npm run start',
+//    timeout: 120 * 1000,
+//    reuseExistingServer: !process.env.CI
+//  },
   testDir: './tests',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
@@ -36,7 +42,7 @@ export const config = {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
+    //baseURL: 'http://localhost:3333',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -97,9 +103,4 @@ export const config = {
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   // outputDir: 'test-results/',
 
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   port: 3000,
-  // },
-};
+}

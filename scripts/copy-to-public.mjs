@@ -1,13 +1,16 @@
 #! /usr/bin/env node
-import { copyFileSync, unlinkSync } from 'fs'
-import { copySync } from 'fs-extra'
+import { copySync, emptyDirSync } from 'fs-extra'
 
-try {
-  unlinkSync('./public/router.mjs')
-}
-catch (err) {
-  // Ignore error trying to remove non-existent file.
+async function setup() {
+  try {
+    await emptyDirSync('./public')
+    copySync('./src/index.html', './public/index.html')
+    copySync('./lib', './public/lib')
+    copySync('./index.mjs', './public/router.mjs')
+  }
+  catch(error) {
+    console.error(error)
+  }
 }
 
-copyFileSync('./index.mjs', './public/router.mjs')
-copySync('./lib', './public/lib')
+setup()
