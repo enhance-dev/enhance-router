@@ -17,11 +17,12 @@ jobs:
       run: npm ci
     - name: Install Playwright
       run: npx playwright install --with-deps
-    - name: Setup tests
-      uses: BerniWittmann/background-server-action@latest
+    - name: Background Server
+      uses: BerniWittmann/background-server-action@v1.0.4
       with:
         build: npm run setup
         start: npm start
+        wait-on: 'http://localhost:3333'
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v2
