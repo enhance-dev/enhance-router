@@ -19,9 +19,9 @@ jobs:
       run: npx playwright install --with-deps
     - name: Setup tests
       uses: BerniWittmann/background-server-action@latest
-        with:
-          build: npm run setup
-          start: npm start
+      with:
+        build: npm run setup
+        start: npm start
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v2
