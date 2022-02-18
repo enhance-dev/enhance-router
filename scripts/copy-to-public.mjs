@@ -1,10 +1,16 @@
 #! /usr/bin/env node
-import { copyFileSync, unlinkSync } from 'fs'
+import { copySync, emptyDirSync } from 'fs-extra'
 
-try {
-  unlinkSync('./public/router.mjs')
+async function setup() {
+  try {
+    await emptyDirSync('./public')
+    copySync('./src/index.html', './public/index.html')
+    copySync('./lib', './public/lib')
+    copySync('./index.mjs', './public/router.mjs')
+  }
+  catch(error) {
+    console.error(error)
+  }
 }
-catch (err) {
-  // Nothing to see here
-}
-copyFileSync('./index.mjs', './public/router.mjs')
+
+setup()
